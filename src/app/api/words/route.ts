@@ -10,7 +10,6 @@ export async function GET() {
       database: process.env.DATABASE_NAME,
     });
 
-    // Proper typing for SELECT query results
     const [results]: [mysql.RowDataPacket[], mysql.FieldPacket[]] = await connection.query('SELECT * FROM Words');
     await connection.end();
 

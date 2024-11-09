@@ -17,7 +17,6 @@ export async function POST(req: Request) {
             database: process.env.DATABASE_NAME,
         });
 
-        // Destructure query result and use appropriate type
         const [deleteResult] = await connection.query<mysql.ResultSetHeader>(
             'DELETE FROM Words WHERE word = ?',
             [word]
