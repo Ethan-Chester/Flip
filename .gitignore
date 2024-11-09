@@ -1,0 +1,84 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Environment variables
+.env
+.env.*
+
+# Python-related
+*.pyc
+*.pyo
+__pycache__/
+*.pytest_cache/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.tmp
+*.temp
+*.out
+*.bak
+
+# Build artifacts
+dist/
+build/
+*.min.js
+*.min.css
+coverage/
+*.lock
+
+# Packages
+*.egg
+*.egg-info/
+.eggs/
+
+# Test-related
+.pytest_cache/
+.coverage
+coverage/
+
+# Virtual environments
+venv/
+.env/
+env/
+__pycache__/
+
+# Miscellaneous
+*.log
+*.sqlite
+*.pid
+*.seed
+*.seed.*
+
+# Generated files
+*.iml
+*.class
+*.war
+*.jar
+*.gz
+*.tgz
+*.zip
+*.tar
+
+# Ignore npm package lock (optional, depending on preference)
+package-lock.json
+yarn.lock

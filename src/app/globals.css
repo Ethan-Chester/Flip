@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --background: #6EE67A;
+  --background2: #FFD21E;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #6EE67A;
+    --background2: #FFD21E;
+  }
+}
+
+body {
+  background: var(--background);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
