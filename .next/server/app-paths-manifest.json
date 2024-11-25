@@ -1,3 +1,6 @@
 {
-  "/cards/page": "app/cards/page.js"
+  "/add_cards/page": "app/add_cards/page.js",
+  "/quiz/page": "app/quiz/page.js",
+  "/cards/page": "app/cards/page.js",
+  "/api/words/route": "app/api/words/route.js"
 }

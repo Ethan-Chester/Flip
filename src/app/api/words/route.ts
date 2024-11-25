@@ -1,22 +1,21 @@
+import { db } from '../../firebase';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { NextResponse } from 'next/server';
-import mysql from 'mysql2/promise';
 
 export async function GET() {
   try {
-    const connection = await mysql.createConnection({
-      host: process.env.DATABASE_HOST,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-    });
+    const wordsCollection = collection(db, 'Words');
+    const querySnapshot = await getDocs(wordsCollection);
+    
+    const words = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-    const [results]: [mysql.RowDataPacket[], mysql.FieldPacket[]] = await connection.query('SELECT * FROM Words');
-    await connection.end();
-
-    return NextResponse.json(results);
+    return NextResponse.json(words);
   } catch (error) {
-    console.error('Error querying the database: ', error);
-    return NextResponse.json({ error: 'Database query failed' }, { status: 500 });
+    console.error('Error fetching documents:', error);
+    return NextResponse.json({ error: 'Failed to fetch documents' }, { status: 500 });
   }
 }
 
@@ -29,26 +28,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
     }
 
-    const connection = await mysql.createConnection({
-      host: process.env.DATABASE_HOST,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
+    const wordsCollection = collection(db, 'Words');
+    const docRef = await addDoc(wordsCollection, {
+      word,
+      definition,
+      pos,
+      pronunciation,
+      confidence,
     });
 
-    // Proper typing for INSERT query results
-    const [insertResult]: [mysql.ResultSetHeader, mysql.FieldPacket[]] = await connection.query(
-      'INSERT INTO Words (word, definition, pos, pronunciation, confidence) VALUES (?, ?, ?, ?, ?)',
-      [word, definition, pos, pronunciation, confidence]
-    );
-
-    const insertId = insertResult.insertId;
-
-    await connection.end();
-
-    return NextResponse.json({ success: true, insertId: insertId }, { status: 201 });
+    return NextResponse.json({ success: true, id: docRef.id }, { status: 201 });
   } catch (error) {
-    console.error('Error inserting into the database: ', error);
-    return NextResponse.json({ error: 'Database query failed' }, { status: 500 });
+    console.error('Error adding document:', error);
+    return NextResponse.json({ error: 'Failed to add document' }, { status: 500 });
   }
 }
